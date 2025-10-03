@@ -65,9 +65,11 @@ El sistema se divide en modulos principales:
 **Gestión de usuarios**
 - Factory nos permite crear usuarios según su rol ,administrador o empleado, sin tener que usar muchos condicionales, y cada usuario recibe automáticamente sus permisos correspondientes. Esto facilita la administración de roles.
 - Singleton se utiliza en la conexión a la base de datos, para que todos los módulos del sistema accedan siempre a la misma instancia. Esto evita errores, duplicación de recursos y asegura que la información sobre usuarios o movimientos se maneje de manera compacta.
+  
 **Gestión de productos**
 - Observer porque nos permite monitorear el stock mínimo. Cada producto actúa como sujeto y, cuando su cantidad baja de un nivel crítico, notifica automáticamente a los administradores. Así, no es necesario que ellos revisen manualmente cada producto, y el sistema puede generar alertas de manera automática.
 - Decorator si algún producto requiere características adicionales o especiales en el futuro para agregar funcionalidades sin modificar la clase base del producto.
+  
 **Movimientos de stock**
 - Command para cada ingreso o egreso que se registra como un comando que guarda quién lo realizó y en qué momento, y también permire revertir operaciones. Esto aporta control y seguridad al sistema, porque todas las acciones quedan registradas.
 - Builder puede ser útil para generar informes complejos como el resumen mensual de entradas y salidas o los movimientos de cada empleado. Se puede construir reportes paso a paso y exportarlos en distintos formatos, como PDF o Excel, sin duplicar código.
