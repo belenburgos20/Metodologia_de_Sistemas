@@ -8,10 +8,8 @@ import {
   crearMovimiento,
   modificarMovimiento,
 } from "../controllers/movimiento.controller";
-import { verificarToken } from "../controllers/auth.controller";
 
 const routermovimientos = Router();
-routermovimientos.use(verificarToken);
 routermovimientos.get("/", obtenerMovimiento);
 routermovimientos.get("/ingresos", obtenerIngresos);
 routermovimientos.get("/egresos", obtenerEgresos);
