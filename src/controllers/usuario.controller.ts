@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { getUsuarios } from "../services/usuario.service";
 import { loginUsuario, logoutUsuario } from "./auth.controller";
+import { database } from "../services/database.service";
 
 export const ObtenerUsuarios = async (req: Request, res: Response) => {
   try {
@@ -35,7 +36,7 @@ export const crearUsuario = async (req: Request, res: Response) => {
     const usuarios = await getUsuarios();
     newUsuario.id =
       usuarios.length > 0 ? usuarios[usuarios.length - 1].id + 1 : 1;
-    usuarios.push(newUsuario);
+    database.addUsuario(newUsuario);
     return res
       .status(201)
       .json({ message: "Usuario creado correctamente", usuario: newUsuario });
@@ -47,11 +48,11 @@ export const crearUsuario = async (req: Request, res: Response) => {
 export const modificarUsuario = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id, 10);
   try {
-    const usuarios = await getUsuarios();
-    const usuarioIndex = usuarios.findIndex((u: any) => u.id === id);
-    if (usuarioIndex !== -1) {
-      usuarios[usuarioIndex] = { ...usuarios[usuarioIndex], ...req.body };
-      return res.status(200).json(usuarios[usuarioIndex]);
+    const actualizado = database.updateUsuario(id, req.body);
+    if (actualizado) {
+      const usuarios = await getUsuarios();
+      const usuario = usuarios.find((u: any) => u.id === id);
+      return res.status(200).json(usuario);
     }
     return res.status(404).json({ message: "Usuario no encontrado" });
   } catch (error) {
@@ -62,10 +63,8 @@ export const modificarUsuario = async (req: Request, res: Response) => {
 export const eliminarUsuario = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id, 10);
   try {
-    const usuarios = await getUsuarios();
-    const usuarioIndex = usuarios.findIndex((u: any) => u.id === id);
-    if (usuarioIndex !== -1) {
-      usuarios.splice(usuarioIndex, 1);
+    const eliminado = database.deleteUsuario(id);
+    if (eliminado) {
       return res
         .status(200)
         .json({ message: "Usuario eliminado correctamente" });

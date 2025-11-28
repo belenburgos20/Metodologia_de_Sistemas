@@ -3,9 +3,10 @@ import {
   reporteResumenMensual,
   reporteStockBajo,
 } from "../controllers/reportes.controller";
+import { authenticateUser } from "../middleware/auth.middleware";
 
-const routermovimientos = Router();
-routermovimientos.get("/resumen-mensual", reporteResumenMensual);
-routermovimientos.get("/stock-bajo", reporteStockBajo);
+const routerReportes = Router();
+routerReportes.get("/resumen-mensual", authenticateUser, reporteResumenMensual);
+routerReportes.get("/stock-bajo", authenticateUser, reporteStockBajo);
 
-export default routermovimientos;
+export default routerReportes;

@@ -10,7 +10,7 @@ interface RequestConUsuario extends Request {
 }
 
 function esAdmin(req: RequestConUsuario): boolean {
-  return !!req.usuario && req.usuario.rol === "admin";
+  return !!req.usuario && (req.usuario.rol === "admin" || req.usuario.rol === "administrador");
 }
 
 export const reporteStockBajo = async (

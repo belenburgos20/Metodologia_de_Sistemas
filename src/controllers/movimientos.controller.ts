@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { getMovimientos } from "../services/movimiento.service";
+import { database } from "../services/database.service";
 
 export const obtenerMovimiento = async (req: Request, res: Response) => {
   try {
@@ -67,7 +68,7 @@ export const crearMovimiento = async (req: Request, res: Response) => {
     const movimientos = await getMovimientos();
     nuevoMovimiento.id =
       movimientos.length > 0 ? movimientos[movimientos.length - 1].id + 1 : 1;
-    movimientos.push(nuevoMovimiento);
+    database.addMovimiento(nuevoMovimiento);
     return res
       .status(201)
       .json({
@@ -82,10 +83,8 @@ export const crearMovimiento = async (req: Request, res: Response) => {
 export const eliminarMovimiento = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id, 10);
   try {
-    const movimientos = await getMovimientos();
-    const index = movimientos.findIndex((mov: any) => mov.id === id);
-    if (index !== -1) {
-      movimientos.splice(index, 1);
+    const eliminado = database.deleteMovimiento(id);
+    if (eliminado) {
       return res
         .status(200)
         .json({ message: "Movimiento eliminado correctamente" });
@@ -100,18 +99,14 @@ export const eliminarMovimiento = async (req: Request, res: Response) => {
 export const modificarMovimiento = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id, 10);
   try {
-    const movimientos = await getMovimientos();
-    const movimientoIndex = movimientos.findIndex((mov: any) => mov.id === id);
-    if (movimientoIndex !== -1) {
-      movimientos[movimientoIndex] = {
-        ...movimientos[movimientoIndex],
-        ...req.body,
-      };
+    const actualizado = database.updateMovimiento(id, req.body);
+    if (actualizado) {
+      const movimiento = database.getMovimientoById(id);
       return res
         .status(200)
         .json({
           message: "Movimiento modificado correctamente",
-          movimiento: movimientos[movimientoIndex],
+          movimiento: movimiento,
         });
     } else {
       return res.status(404).json({ message: "Movimiento no encontrado" });
