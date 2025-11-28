@@ -4,9 +4,10 @@
   "description": "- Hubert Noelia\r - Guardese Luciano\r - Ibañez Ian Franco\r - Burgos Belén",
   "main": "index.js",
   "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky install",
-    "start": "ts-node src/app.ts",
+    "start": "node dist/server.js",
     "build": "tsc"
   },
   "repository": {
@@ -22,6 +23,8 @@
   "homepage": "https://github.com/belenburgos20/Metodologia_de_Sistemas#readme",
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@types/cors": "^2.8.19",
+    "@types/dotenv": "^6.1.1",
     "@types/express": "^5.0.5",
     "@types/node": "^24.10.1",
     "@typescript-eslint/eslint-plugin": "^8.48.0",
@@ -35,10 +38,13 @@
     "jiti": "^2.6.1",
     "prettier": "^3.7.1",
     "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.48.0"
   },
   "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
     "express": "^5.1.0"
   }
 }

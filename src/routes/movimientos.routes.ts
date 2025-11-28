@@ -7,7 +7,7 @@ import {
   eliminarMovimiento,
   crearMovimiento,
   modificarMovimiento,
-} from "../controllers/movimiento.controller";
+} from "../controllers/movimientos.controller";
 
 const routermovimientos = Router();
 routermovimientos.get("/", obtenerMovimiento);

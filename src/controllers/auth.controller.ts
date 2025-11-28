@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { getUsuarios } from "../services/usuario.service";
 
 export const loginUsuario = async (req: Request, res: Response) => {
   const { email, contraseña } = req.body;

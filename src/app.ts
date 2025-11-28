@@ -1,12 +1,23 @@
-import express from 'express';
-import cors from 'cors';
+import express from "express";
+import cors from "cors";
+import productoRoutes from "./routes/producto.routes";
+import movimientoRoutes from "./routes/movimientos.routes";
+import reporteRoutes from "./routes/reportes.routes";
+import usuarioRoutes from "./routes/usuario.routes";
 
 const app = express();
+
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
 
-// acá se van a agregar las rutas más adelante
-// app.use('/api/usuarios', usuariosRouter);
+app.use("/api/usuarios", usuarioRoutes);
+app.use("/api/productos", productoRoutes);
+app.use("/api/movimientos", movimientoRoutes);
+app.use("/api/reportes", reporteRoutes);
+app.get("/", (req, res) => {
+  res.json({ message: "Servidor funcionando correctamente." });
+});
 
 export default app;
