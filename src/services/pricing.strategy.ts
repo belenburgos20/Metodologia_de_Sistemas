@@ -1,11 +1,8 @@
-// Permite cambiar reglas de negocio (descuentos, impuestos) sin modificar el código principal
-
 export interface IPricingStrategy {
     calcularPrecio(precioBase: number, cantidad?: number): number;
     getDescripcion(): string;
 }
 
-// Sin descuento ni impuesto
 export class PrecioNormalStrategy implements IPricingStrategy {
     calcularPrecio(precioBase: number, cantidad?: number): number {
         return precioBase;
@@ -16,7 +13,6 @@ export class PrecioNormalStrategy implements IPricingStrategy {
     }
 }
 
-// Descuento por volumen
 export class DescuentoVolumenStrategy implements IPricingStrategy {
     private porcentajeDescuento: number;
     private cantidadMinima: number;
@@ -38,7 +34,6 @@ export class DescuentoVolumenStrategy implements IPricingStrategy {
     }
 }
 
-// Descuento por cliente frecuente
 export class DescuentoClienteFrecuenteStrategy implements IPricingStrategy {
     private porcentajeDescuento: number;
 
@@ -55,7 +50,6 @@ export class DescuentoClienteFrecuenteStrategy implements IPricingStrategy {
     }
 }
 
-// Con impuesto
 export class PrecioConImpuestoStrategy implements IPricingStrategy {
     private porcentajeImpuesto: number;
     private baseStrategy: IPricingStrategy;
@@ -75,7 +69,6 @@ export class PrecioConImpuestoStrategy implements IPricingStrategy {
     }
 }
 
-// Usa la estrategia seleccionada
 export class CalculadoraPrecio {
     private strategy: IPricingStrategy;
 

@@ -29,7 +29,7 @@ metodologia de sistemas/
   └── package.json 
 
 
-#### Descripción de carpetas [cite: 21]
+#### Descripción de carpetas
 * *controllers/*: Manejan las solicitudes HTTP, validan datos y llaman a los servicios.
 * *services/*: Contienen la lógica del negocio.
 * *models/*: Definen las entidades del sistema (Usuario, Producto, Presupuesto...)
@@ -107,13 +107,14 @@ A continuación se detallan los patrones implementados y los archivos donde se a
 * PUT /productos/:id 
 * DELETE /productos/:id
 
----
 
 ###  Scripts del proyecto 
  Comando     
  npm install  
  npm run dev 
  npm start
+=======
+
 
 ###  Ejecución del proyecto 
 1.  *Clonar el repositorio*: git clone  
