@@ -60,7 +60,9 @@ El sistema se divide en modulos principales:
 
   - Resumen mensual de entradas y salidas de mercaderia.
 
-- *Patrones de diseño*:
+## 
+
+## Patrones de diseño:
 
 **Gestión de usuarios**
 - Factory nos permite crear usuarios según su rol ,administrador o empleado, sin tener que usar muchos condicionales, y cada usuario recibe automáticamente sus permisos correspondientes. Esto facilita la administración de roles.
@@ -71,8 +73,6 @@ El sistema se divide en modulos principales:
 - Decorator si algún producto requiere características adicionales o especiales en el futuro para agregar funcionalidades sin modificar la clase base del producto.
   
 **Movimientos de stock**
-- Command para cada ingreso o egreso que se registra como un comando que guarda quién lo realizó y en qué momento, y también permire revertir operaciones. Esto aporta control y seguridad al sistema, porque todas las acciones quedan registradas.
-- Builder puede ser útil para generar informes complejos como el resumen mensual de entradas y salidas o los movimientos de cada empleado. Se puede construir reportes paso a paso y exportarlos en distintos formatos, como PDF o Excel, sin duplicar código.
 - Facade para simplificar la interacción de los administradores con el sistema. Por ejemplo, registrar una venta o un movimiento de stock implica varios pasos internos: validar stock, descontar cantidades, registrar el movimiento y actualizar reportes. El administrador solo necesita interactuar con una interfaz simple, mientras que la complejidad interna queda oculta.
 - Strategy sobre todo en la parte de cálculos o reglas de negocio que pueden variar, como descuentos, impuestos o condiciones especiales para ciertos productos. Con Strategy podemos cambiar la forma de aplicar estas reglas sin modificar el código principal, haciendo que el sistema sea más escalable.
 
