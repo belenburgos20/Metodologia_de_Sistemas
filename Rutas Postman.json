@@ -1,0 +1,394 @@
+{
+    "info": {
+      "name": "Trabajo API - Metodologia de Sistemas II",
+      "description": "Colección completa para prueba de rutas sobre API",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+      {
+        "key": "base_url",
+        "value": "http://localhost:3000",
+        "type": "string"
+      }
+    ],
+    "item": [
+      {
+        "name": "Conexion",
+        "item": [
+          {
+            "name": "Verificar servidor",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "{{base_url}}/",
+                "host": ["{{base_url}}"],
+                "path": [""]
+              }
+            },
+            "response": []
+          }
+        ]
+      },
+      {
+        "name": "Usuarios",
+        "item": [
+          {
+            "name": "Obtener todos los usuarios",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "{{base_url}}/api/usuarios",
+                "host": ["{{base_url}}"],
+                "path": ["api", "usuarios"]
+              }
+            },
+            "response": []
+          },
+          {
+            "name": "Obtener usuario por ID",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "{{base_url}}/api/usuarios/1",
+                "host": ["{{base_url}}"],
+                "path": ["api", "usuarios", "1"]
+              }
+            },
+            "response": []
+          },
+          {
+            "name": "Crear usuario",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"nombre\": \"Juan Pérez\",\n  \"email\": \"juan@example.com\",\n  \"contraseña\": \"password123\",\n  \"rol\": \"admin\"\n}"
+              },
+              "url": {
+                "raw": "{{base_url}}/api/usuarios",
+                "host": ["{{base_url}}"],
+                "path": ["api", "usuarios"]
+              }
+            },
+            "response": []
+          },
+          {
+            "name": "Modificar usuario",
+            "request": {
+              "method": "PUT",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"nombre\": \"Juan Pérez Actualizado\",\n  \"email\": \"juan.actualizado@example.com\",\n  \"rol\": \"usuario\"\n}"
+              },
+              "url": {
+                "raw": "{{base_url}}/api/usuarios/1",
+                "host": ["{{base_url}}"],
+                "path": ["api", "usuarios", "1"]
+              }
+            },
+            "response": []
+          },
+          {
+            "name": "Eliminar usuario",
+            "request": {
+              "method": "DELETE",
+              "header": [],
+              "url": {
+                "raw": "{{base_url}}/api/usuarios/1",
+                "host": ["{{base_url}}"],
+                "path": ["api", "usuarios", "1"]
+              }
+            },
+            "response": []
+          },
+          {
+            "name": "Login",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"email\": \"juan@example.com\",\n  \"contraseña\": \"password123\"\n}"
+              },
+              "url": {
+                "raw": "{{base_url}}/api/usuarios/login",
+                "host": ["{{base_url}}"],
+                "path": ["api", "usuarios", "login"]
+              }
+            },
+            "response": []
+          },
+          {
+            "name": "Logout",
+            "request": {
+              "method": "POST",
+              "header": [],
+              "url": {
+                "raw": "{{base_url}}/api/usuarios/logout",
+                "host": ["{{base_url}}"],
+                "path": ["api", "usuarios", "logout"]
+              }
+            },
+            "response": []
+          }
+        ]
+      },
+      {
+        "name": "Productos",
+        "item": [
+          {
+            "name": "Obtener todos los productos",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "{{base_url}}/api/productos",
+                "host": ["{{base_url}}"],
+                "path": ["api", "productos"]
+              }
+            },
+            "response": []
+          },
+          {
+            "name": "Obtener producto por ID",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "{{base_url}}/api/productos/1",
+                "host": ["{{base_url}}"],
+                "path": ["api", "productos", "1"]
+              }
+            },
+            "response": []
+          },
+          {
+            "name": "Obtener producto por código",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "{{base_url}}/api/productos/codigo/PROD001",
+                "host": ["{{base_url}}"],
+                "path": ["api", "productos", "codigo", "PROD001"]
+              }
+            },
+            "response": []
+          },
+          {
+            "name": "Agregar producto",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"codigo\": \"PROD001\",\n  \"nombre\": \"Producto de prueba\",\n  \"descripcion\": \"Descripción del producto\",\n  \"precio\": 100.50,\n  \"stock\": 50,\n  \"categoria\": \"Electrónica\"\n}"
+              },
+              "url": {
+                "raw": "{{base_url}}/api/productos",
+                "host": ["{{base_url}}"],
+                "path": ["api", "productos"]
+              }
+            },
+            "response": []
+          },
+          {
+            "name": "Modificar producto",
+            "request": {
+              "method": "PUT",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"nombre\": \"Producto actualizado\",\n  \"descripcion\": \"Descripción actualizada\",\n  \"precio\": 120.00,\n  \"stock\": 75\n}"
+              },
+              "url": {
+                "raw": "{{base_url}}/api/productos/1",
+                "host": ["{{base_url}}"],
+                "path": ["api", "productos", "1"]
+              }
+            },
+            "response": []
+          },
+          {
+            "name": "Eliminar producto",
+            "request": {
+              "method": "DELETE",
+              "header": [],
+              "url": {
+                "raw": "{{base_url}}/api/productos/1",
+                "host": ["{{base_url}}"],
+                "path": ["api", "productos", "1"]
+              }
+            },
+            "response": []
+          },
+          {
+            "name": "Calcular precio",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"cantidad\": 10,\n  \"precioBase\": 100.00,\n  \"estrategia\": \"descuento\",\n  \"parametros\": {\n    \"porcentajeDescuento\": 15\n  }\n}"
+              },
+              "url": {
+                "raw": "{{base_url}}/api/productos/calcular-precio",
+                "host": ["{{base_url}}"],
+                "path": ["api", "productos", "calcular-precio"]
+              }
+            },
+            "response": []
+          }
+        ]
+      },
+      {
+        "name": "Movimientos",
+        "item": [
+          {
+            "name": "Obtener todos los movimientos",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "{{base_url}}/api/movimientos",
+                "host": ["{{base_url}}"],
+                "path": ["api", "movimientos"]
+              }
+            },
+            "response": []
+          },
+          {
+            "name": "Obtener ingresos",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "{{base_url}}/api/movimientos/ingresos",
+                "host": ["{{base_url}}"],
+                "path": ["api", "movimientos", "ingresos"]
+              }
+            },
+            "response": []
+          },
+          {
+            "name": "Obtener egresos",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "{{base_url}}/api/movimientos/egresos",
+                "host": ["{{base_url}}"],
+                "path": ["api", "movimientos", "egresos"]
+              }
+            },
+            "response": []
+          },
+          {
+            "name": "Obtener movimiento por ID",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "{{base_url}}/api/movimientos/1",
+                "host": ["{{base_url}}"],
+                "path": ["api", "movimientos", "1"]
+              }
+            },
+            "response": []
+          },
+          {
+            "name": "Crear movimiento",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"tipo\": \"ingreso\",\n  \"monto\": 500.00,\n  \"descripcion\": \"Venta de productos\",\n  \"fecha\": \"2024-01-15\",\n  \"categoria\": \"Ventas\",\n  \"productoId\": 1,\n  \"cantidad\": 5\n}"
+              },
+              "url": {
+                "raw": "{{base_url}}/api/movimientos",
+                "host": ["{{base_url}}"],
+                "path": ["api", "movimientos"]
+              }
+            },
+            "response": []
+          },
+          {
+            "name": "Modificar movimiento",
+            "request": {
+              "method": "PUT",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"tipo\": \"egreso\",\n  \"monto\": 300.00,\n  \"descripcion\": \"Compra de insumos actualizada\",\n  \"categoria\": \"Compras\"\n}"
+              },
+              "url": {
+                "raw": "{{base_url}}/api/movimientos/1",
+                "host": ["{{base_url}}"],
+                "path": ["api", "movimientos", "1"]
+              }
+            },
+            "response": []
+          },
+          {
+            "name": "Eliminar movimiento",
+            "request": {
+              "method": "DELETE",
+              "header": [],
+              "url": {
+                "raw": "{{base_url}}/api/movimientos/1",
+                "host": ["{{base_url}}"],
+                "path": ["api", "movimientos", "1"]
+              }
+            },
+            "response": []
+          }
+        ]
+      }
+    ]
+  }

@@ -1,78 +1,143 @@
-# Metodología de Sistemas II  (TUP)
+# Sistema de Gestión de Presupuestos y Productos
 
-## Integrantes
-- Hubert Noelia
-- Guardese Luciano
-- Ibañez Ian Franco
-- Burgos Belén
+## Backend en Node.js + Express 
 
-## Profesor y ayudante
-- Lucas Fassi
-- Javier Kinter
+### Descripción del Proyecto
+Este proyecto implementa un backend para la gestión de productos, categorías, usuarios y presupuestos
+El objetivo es ofrecer una *API clara y modular* que permita administrar la información del sistema y facilitar futuras integraciones con un frontend.
+Se utiliza una arquitectura organizada basada en *controllers, services, models, routes*, asegurando escalabilidad y buena mantenibilidad.
+El proyecto incorpora patrones de diseño (creacionales, estructurales y de comportamiento) exigidos por la materia y aplicados en el contexto de este sistema.
 
-## Proyecto
-### Introduccion
+---
 
-Proponemos desarrollar un Sistema de Gestion de stock y administracion, orientado a administradores y empleados de un negocio de ventas.
-La finalidad es contar con una herramienta web que permita registrar movimientos de stock, consultar existencias y generar reportes básicos, evitando errores manuales y mejorando la organización interna.
+### Tecnologías utilizadas 
+* Node.js
+* Express.js
+* TypeScript 
 
-### Objetivos 
+---
 
-- Implementar un sistema que centralice el control de stock en una unica plataforma.
+### Estructura del proyecto 
 
-- Facilitar la gestion de usuarios internos (administradores y empleados).
+metodologia de sistemas/ 
+── src/ │ 
+  ├── controllers/ 
+  ├── services/  
+  ├── models/ 
+  ├── routes/ 
+  └── app.ts 
+  └── package.json 
 
-- Asegurar que el sistema sea simple de usar y mantenible a futuro.
 
-### Metodo de Trabajo
+#### Descripción de carpetas [cite: 21]
+* *controllers/*: Manejan las solicitudes HTTP, validan datos y llaman a los servicios.
+* *services/*: Contienen la lógica del negocio.
+* *models/*: Definen las entidades del sistema (Usuario, Producto, Presupuesto...)
+* *routes/*: Definen los endpoints disponibles
 
-- *Control de versiones con Git/GitHub*: ramas principales `main` y `develop`, con ramas `feature` para funcionalidades nuevas
-  
-- *Manejo de dependencias*: separación entre dependencias de producción (ej. Express, PostgreSQL) y dependencias de desarrollo (ej. Jest para pruebas unitarias)
+---
 
-### Solución Propuesta
+###  Patrones de Diseño Utilizados
+A continuación se detallan los patrones implementados y los archivos donde se aplican.
 
-El sistema se divide en modulos principales:
+#### 1. Singleton
+* *Archivo*: database.service.ts
+* *Descripción*: El servicio de base de datos funciona como un Singleton, garantizando una única instancia compartida en todo el sistema. Esto evita múltiples conexiones o duplicación de datos en mocks
 
-- Gestion de usuarios internos
+#### 2. Factory 
+* *Archivos*: usuario.model.ts, usuario.controller.ts (creación de usuario) 
+* *Descripción*: Se implementa una fábrica de usuarios que asigna roles (admin, empleado, etc.) desde un único punto. Evita repetición de código y permite extender roles fácilmente
 
-  - Roles: Administrador y Empleado.
+#### 3. Facade 
+* *Archivo*: Cualquier archivo dentro de *.service.ts
+* *Descripción: Cada **service actúa como una fachada* : el controller realiza una llamada simple mientras que internamente el service coordina validaciones, cálculos, consultas y actualizaciones
+* *Ejemplo típico*: validar stock, registrar movimiento, actualizar producto, crear presupuesto
 
-  - Registro, edicion y baja de usuarios.
+---
 
-- Gestion de productos
+###  Endpoints principales
 
-  - Altas, bajas y modificaciones.
+##  Usuarios 
 
-  - Control de stock mínimo.
+| Operación             | Método   | Endpoint           | Comando curl 
+| :---                  | :---     | :---               | :--- 
+| *Obtener todos*       | GET      | /usuarios          | curl -X GET http://localhost:3000/usuarios 
+| *Obtener por ID*      | GET      | /usuarios/:id      | curl -X GET http://localhost:3000/usuarios/1
+| *Crear usuario*       | POST     | /usuarios          | curl -X POST http://localhost:3000/usuarios \ -H "Content-Type: application/json" \ -d'{"nombre": "Nuevo Usuario", "email": "nuevo@example.com", "password": "123456", "rol": "empleado"}'
+| *Modificar usuario*   | PUT      | /usuarios/:id      | curl -X PUT http://localhost:3000/usuarios/1 \ -H "Content-Type: application/json" \ -d '{"nombre": "Usuario Actualizado"}'
+| *Eliminar usuario*    | DELETE   | /usuarios/:id      | curl -X DELETE http://localhost:3000/usuarios/1 
+| *Login*               | POST     | /usuarios/login    | curl -X POST http://localhost:3000/usuarios/login \ -H "Content-Type: application/json" \ -d '{"email": "admin@example.com", "password": "1234"}'
+| *Logout*              | POST     | /usuarios/logout   | curl -X POST http://localhost:3000/usuarios/logout 
 
-- Movimientos de stock
+###  Productos 
 
-  - Registro de ingresos y egresos de productos.
+| Operación           | Método | Endpoint        | Comando curl 
+| :---                | :---   | :---            | :--- 
+| *Obtener todos*     | GET    | /productos      | curl -X GET http://localhost:3000/productos 
+| *Obtener por ID*    | GET    | /productos/:id  | curl -X GET http://localhost:3000/productos/1 
+| *Crear producto*    | POST   | /productos      | curl -X POST http://localhost:3000/productos \ -H "Content-Type: application/json" \ -d'{"nombre": "Producto X", "precio": 1500, "stock": 50, "activo": true}'
+| *Modificar producto*| PUT    | /productos/:id  | curl -X PUT http://localhost:3000/productos/1 \ -H "Content-Type: application/json" \ -d'{"precio": 1999}' 
+| *Eliminar producto* | DELETE | /productos/:id  | curl -X DELETE http://localhost:3000/productos/1
 
-  - Historial de movimientos con fecha, hora y usuario responsable.
+###  Movimientos 
 
-- Reportes (solo para administradores)
+| Operación               | Método  | Endpoint                | Comando curl 
+| :---                    | :---    | :---                    | :--- 
+| *Obtener todos*         | GET     | /movimientos            | curl -X GET http://localhost:3000/movimientos 
+| *Obtener ingresos*      | GET     | /movimientos/ingresos   | curl -X GET http://localhost:3000/movimientos/ingresos
+| *Obtener egresos*       | GET     | /movimientos/egresos    | curl -X GET http://localhost:3000/movimientos/egresos
+| *Obtener por ID*        | GET     | /movimientos/:id        | curl -X GET http://localhost:3000/movimientos/1
+| *Crear movimiento*      | POST    | /movimientos            | curl -X POST http://localhost:3000/movimientos \ -H "Content-Type: application/json" \ -d'{"tipo": "ingreso", "productoId": 2, "cantidad": 5, "usuarioId": 1}' 
+| *Modificar movimiento*  | PUT     | /movimientos/:id        | curl -X PUT http://localhost:3000/movimientos/1 \ -H "Content-Type: application/json" \ -d '{"cantidad": 10}'
+| *Eliminar movimiento*   | DELETE | /movimientos/:id         | curl -X DELETE http://localhost:3000/movimientos/1 
 
-  - Productos con stock bajo.
 
-  - Movimientos realizados por cada empleado.
+#### Usuarios 
+* GET /usuarios
+* GET /usuarios/:id
+* POST /usuarios
+* PUT /usuarios/:id
+* DELETE /usuarios/:id 
+* POST /login 
+* POST /logout 
 
-  - Resumen mensual de entradas y salidas de mercaderia.
+#### Productos 
+* GET /productos 
+* POST /productos 
+* PUT /productos/:id 
+* DELETE /productos/:id
 
-- *Patrones de diseño*:
+---
 
-**Gestión de usuarios**
-- Factory nos permite crear usuarios según su rol ,administrador o empleado, sin tener que usar muchos condicionales, y cada usuario recibe automáticamente sus permisos correspondientes. Esto facilita la administración de roles.
-- Singleton se utiliza en la conexión a la base de datos, para que todos los módulos del sistema accedan siempre a la misma instancia. Esto evita errores, duplicación de recursos y asegura que la información sobre usuarios o movimientos se maneje de manera compacta.
-  
-**Gestión de productos**
-- Observer porque nos permite monitorear el stock mínimo. Cada producto actúa como sujeto y, cuando su cantidad baja de un nivel crítico, notifica automáticamente a los administradores. Así, no es necesario que ellos revisen manualmente cada producto, y el sistema puede generar alertas de manera automática.
-- Decorator si algún producto requiere características adicionales o especiales en el futuro para agregar funcionalidades sin modificar la clase base del producto.
-  
-**Movimientos de stock**
-- Command para cada ingreso o egreso que se registra como un comando que guarda quién lo realizó y en qué momento, y también permire revertir operaciones. Esto aporta control y seguridad al sistema, porque todas las acciones quedan registradas.
-- Builder puede ser útil para generar informes complejos como el resumen mensual de entradas y salidas o los movimientos de cada empleado. Se puede construir reportes paso a paso y exportarlos en distintos formatos, como PDF o Excel, sin duplicar código.
-- Facade para simplificar la interacción de los administradores con el sistema. Por ejemplo, registrar una venta o un movimiento de stock implica varios pasos internos: validar stock, descontar cantidades, registrar el movimiento y actualizar reportes. El administrador solo necesita interactuar con una interfaz simple, mientras que la complejidad interna queda oculta.
-- Strategy sobre todo en la parte de cálculos o reglas de negocio que pueden variar, como descuentos, impuestos o condiciones especiales para ciertos productos. Con Strategy podemos cambiar la forma de aplicar estas reglas sin modificar el código principal, haciendo que el sistema sea más escalable.
+###  Scripts del proyecto 
+ Comando     
+ npm install  
+ npm run dev 
+ npm start
 
+###  Ejecución del proyecto 
+1.  *Clonar el repositorio*: git clone  
+2.  *Instalar dependencias*: npm install 
+3.  *Levantar servidor*: npm run dev 
+4.  *API disponible en*: http://localhost:3000 
+
+---
+
+### Justificación para la entrega 
+Este backend cumple con los requisitos académicos:
+* Implementa patrones de diseño creacionales, estructurales y de comportamiento.
+* Utiliza una arquitectura modular y clara.
+* Es completamente funcional con datos mock.
+* Está preparado para integrarse con un frontend o migrar a una base real.
+
+### Estado actual 
+Backend funcional, modular, documentado y preparado para presentación.
+
+---
+
+###  Integrantes 
+
+  Ian Franco Ibañez
+  Belén Burgos
+  Noelia Hubert
+  Luciano Guardese

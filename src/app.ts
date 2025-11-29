@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import productoRoutes from "./routes/producto.routes";
 import movimientoRoutes from "./routes/movimientos.routes";
-import reporteRoutes from "./routes/reportes.routes";
 import usuarioRoutes from "./routes/usuario.routes";
 
 const app = express();
@@ -15,7 +14,6 @@ app.use(express.json());
 app.use("/api/usuarios", usuarioRoutes);
 app.use("/api/productos", productoRoutes);
 app.use("/api/movimientos", movimientoRoutes);
-app.use("/api/reportes", reporteRoutes);
 app.get("/", (req, res) => {
   res.json({ message: "Servidor funcionando correctamente." });
 });
